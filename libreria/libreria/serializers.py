@@ -22,3 +22,7 @@ class ValidateSerializer(serializers.Serializer):
         libros = Libro.objects.filter(genero=self.validated_data.get('genero'))
         resp = LibroSerializer(libros, many=True).data
         return resp
+
+    def funcion1(self):
+        print("Funcion 1")
+        return 1
