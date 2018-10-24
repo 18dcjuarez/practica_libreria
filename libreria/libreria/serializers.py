@@ -30,3 +30,22 @@ class ValidateSerializer(serializers.Serializer):
     def funcion2(self):
         print('Esto es la funcion 2')
         return 2
+
+
+class DestroySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    def validate_id(self, param):
+        try:
+            libro = Libro.objects.get(pk=param)
+            return param
+        except:
+            raise serializers.ValidationError("Libro no existe")
+
+    def borrar(self):
+        print(self.validated_data.get('id'))
+        libro = Libro.objects.get(pk=self.validated_data.get('id'))
+        print(libro)
+        libro.delete()
+        return 'ok'
+
+
