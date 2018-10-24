@@ -1,5 +1,4 @@
 from django.db import models
-#Importando  el modelo
 
 
 class Libro(models.Model):
