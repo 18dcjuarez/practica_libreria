@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .serializers import LibroSerializer, ValidateSerializer
+from .serializers import LibroSerializer, ValidateSerializer,CrearLibroSerializer
 from .models import Libro
 
 
@@ -13,7 +13,16 @@ class LibroViewSet(viewsets.ModelViewSet):
     def list(self, request):
         data1 = request.query_params.dict()
         search = ValidateSerializer(data=data1)
-        print("sale de search: ")
         search.is_valid(raise_exception=True)
         resp = search.buscar()
         return Response(resp)
+
+    def create(self, request):
+        serializer = CrearLibroSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        resp= serializer.crear()
+        return Response (resp)
+
+
+
+

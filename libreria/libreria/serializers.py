@@ -30,3 +30,21 @@ class ValidateSerializer(serializers.Serializer):
     def funcion2(self):
         print('Esto es la funcion 2')
         return 2
+
+class CrearLibroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Libro
+        fields = '__all__'
+
+    def crear(self):
+        print("eso en crear")
+        print(self.validated_data)
+        libro = Libro()
+        libro.titulo = self.validated_data.get('titulo')
+        libro.autor = self.validated_data.get('autor')
+        libro.anio = self.validated_data.get('anio')
+        libro.genero = self.validated_data.get('genero')
+        libro.editorial = self.validated_data.get('editorial')
+        libro.disponible = self.validated_data.get('disponible')
+        libro.save()
+        return CrearLibroSerializer(libro).data
