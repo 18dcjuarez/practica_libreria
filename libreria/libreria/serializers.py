@@ -26,3 +26,7 @@ class ValidateSerializer(serializers.Serializer):
     def funcion1(self):
         print("Funcion 1")
         return 1
+
+    def funcion2(self):
+        print('Esto es la funcion 2')
+        return 2
