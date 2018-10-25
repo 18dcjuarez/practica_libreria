@@ -1,11 +1,7 @@
-from django.shortcuts import get_object_or_404
-
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-
-from .serializers import LibroSerializer, ValidateSerializer,CrearLibroSerializer,UpdateSerializer, DestroySerializer
-
+from .serializers import LibroSerializer, CrearLibroSerializer, UpdateSerializer, DestroySerializer, FilterSerializer
 from .models import Libro
 
 
@@ -13,12 +9,12 @@ class LibroViewSet(viewsets.ModelViewSet):
     serializer_class = LibroSerializer
     queryset = Libro.objects.all()
 
-    def list(self, request):
-        data1 = request.query_params.dict()
-        search = ValidateSerializer(data=data1)
-        search.is_valid(raise_exception=True)
-        resp = search.buscar()
-        return Response(resp)
+    # def list(self, request):
+    #     data1 = request.query_params.dict()
+    #     search = ValidateSerializer(data=data1)
+    #     search.is_valid(raise_exception=True)
+    #     resp = search.buscar()
+    #     return Response(resp)
 
     def destroy(self, request, pk=None):
         data1 = dict()
@@ -28,13 +24,12 @@ class LibroViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         respuesta = serializer.borrar()
         return Response(respuesta)
+
     def create(self, request):
         serializer = CrearLibroSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        resp= serializer.crear()
-        return Response (resp)
-
-
+        resp = serializer.crear()
+        return Response(resp)
 
     def partial_update(self, request, pk=None):
         data1 = request.data
@@ -43,3 +38,10 @@ class LibroViewSet(viewsets.ModelViewSet):
         libro.is_valid(raise_exception=True)
         response = libro.update()
         return Response(response)
+
+    def list(self, request):
+        data1 = request.query_params.dict()
+        search = FilterSerializer(data=data1)
+        search.is_valid(raise_exception=True)
+        resp = search.buscar()
+        return Response(resp)

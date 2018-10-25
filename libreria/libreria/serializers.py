@@ -10,31 +10,32 @@ class LibroSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ValidateSerializer(serializers.Serializer):
-    genero = serializers.CharField(max_length=10)
-
-    def validate_genero(self, param):
-        if param == "Terror" or param == "Novela" or param == "Comedia":
-            return param
-        else:
-            raise serializers.ValidationError("Parametro no existe")
-
-    def buscar(self):
-        libros = Libro.objects.filter(genero=self.validated_data.get('genero'))
-        resp = LibroSerializer(libros, many=True).data
-        return resp
-
-    def funcion1(self):
-        print("Funcion 1")
-        return 1
-
-    def funcion2(self):
-        print('Esto es la funcion 2')
-        return 2
+# class ValidateSerializer(serializers.Serializer):
+#     genero = serializers.CharField(max_length=10, required=False)
+#
+#     def validate_genero(self, param):
+#         if param == "Terror" or param == "Novela" or param == "Comedia":
+#             return param
+#         else:
+#             raise serializers.ValidationError("Parametro no existe")
+#
+#     def buscar(self):
+#         libros = Libro.objects.filter(genero=self.validated_data.get('genero'))
+#         resp = LibroSerializer(libros, many=True).data
+#         return resp
+#
+#     def funcion1(self):
+#         print("Funcion 1")
+#         return 1
+#
+#     def funcion2(self):
+#         print('Esto es la funcion 2')
+#         return 2
 
 
 class DestroySerializer(serializers.Serializer):
     id = serializers.IntegerField()
+
     def validate_id(self, param):
         try:
             libro = Libro.objects.get(pk=param)
@@ -68,6 +69,7 @@ class CrearLibroSerializer(serializers.ModelSerializer):
         libro.save()
         return CrearLibroSerializer(libro).data
 
+
 class UpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     titulo = serializers.CharField(required=False)
@@ -76,7 +78,6 @@ class UpdateSerializer(serializers.Serializer):
     autor = serializers.CharField(required=False)
     editorial = serializers.CharField(required=False)
     disponible = serializers.BooleanField(required=False)
-    
 
     def validate_id(self, param):
         if Libro.objects.filter(id=param):
@@ -95,3 +96,16 @@ class UpdateSerializer(serializers.Serializer):
         libro.disponible = self.validated_data.get('disponible', libro.disponible)
         libro.save()
         return LibroSerializer(libro).data
+
+
+class FilterSerializer(serializers.Serializer):
+    genero = serializers.CharField(max_length=10, required=False)
+    titulo = serializers.CharField(max_length=10, required=False)
+    autor = serializers.CharField(max_length=10, required=False)
+
+    def buscar(self):
+        libros = Libro.objects.filter(genero__icontains=self.validated_data.get('genero', ''),
+                                      titulo__icontains=self.validated_data.get('titulo', ''),
+                                      autor__icontains=self.validated_data.get('autor', ''))
+        resp = LibroSerializer(libros, many=True).data
+        return resp
