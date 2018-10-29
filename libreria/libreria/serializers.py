@@ -4,11 +4,16 @@ from .models import Libro
 
 
 class LibroSerializer(serializers.ModelSerializer):
+    count = serializers.SerializerMethodField()
+
     class Meta:
         model = Libro
         # fields = ('autor', 'titulo', )
         fields = '__all__'
 
+    def get_count(self, data):
+        libros = Libro.objects.filter(genero = data.genero).count()
+        return libros
 
 # class ValidateSerializer(serializers.Serializer):
 #     genero = serializers.CharField(max_length=10, required=False)
@@ -110,6 +115,30 @@ class FilterSerializer(serializers.Serializer):
         resp = LibroSerializer(libros, many=True).data
         return resp
 
+
+# class ContarSerializer(serializers.Serializer):
+#
+#     def contar(self):
+#         libros = Libro.objects.all().count()
+#         return libros
+#
+#
+# class BuscarSerializer(serializers.Serializer):
+#     genero = serializers.CharField(max_length=20)
+#
+#     def validate_genero(self, param):
+#         result = param.find('x')
+#         if(result == -1):
+#             print('no contiene x')
+#             print(param)
+#             return param
+#         else:
+#             raise serializers.ValidationError('La cadena contiene X')
+#
+#     def buscar(self):
+#         libros = Libro.objects.filter(genero__icontains=self.validated_data.get('genero'))
+#         resultado = LibroSerializer(libros, many=True).data
+#         return resultado
 
 class CountSerializer(serializers.Serializer):
 
