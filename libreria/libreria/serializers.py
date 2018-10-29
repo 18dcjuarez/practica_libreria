@@ -5,14 +5,19 @@ from .models import Libro
 
 class LibroSerializer(serializers.ModelSerializer):
     count = serializers.SerializerMethodField()
+
     class Meta:
         model = Libro
         # fields = ('autor', 'titulo', )
         fields = '__all__'
 
     def get_count(self, data):
-            cantidad = Libro.objects.filter(genero=data.genero).count()
-            return cantidad
+        cantidad = Libro.objects.filter(genero=data.genero).count()
+        return cantidad
+
+        # libros = Libro.objects.filter(genero = data.genero).count()
+        # return libros
+
 
 # class ValidateSerializer(serializers.Serializer):
 #     genero = serializers.CharField(max_length=10, required=False)
@@ -140,3 +145,71 @@ class GeneroCountSerializer(serializers.Serializer):
     def contar(self, resp):
         cantidad = len(resp)
         return cantidad
+
+
+# class ContarSerializer(serializers.Serializer):
+#
+#     def contar(self):
+#         libros = Libro.objects.all().count()
+#         return libros
+#
+#
+# class BuscarSerializer(serializers.Serializer):
+#     genero = serializers.CharField(max_length=20)
+#
+#     def validate_genero(self, param):
+#         result = param.find('x')
+#         if(result == -1):
+#             print('no contiene x')
+#             print(param)
+#             return param
+#         else:
+#             raise serializers.ValidationError('La cadena contiene X')
+#
+#     def buscar(self):
+#         libros = Libro.objects.filter(genero__icontains=self.validated_data.get('genero'))
+#         resultado = LibroSerializer(libros, many=True).data
+#         return resultado
+
+# class CountSerializer(serializers.Serializer):
+#
+#    def contar(self):
+#         libros = Libro.objects.all().count()
+#         print(libros)
+#
+#         return libros
+#
+# class ContarSerializer(serializers.Serializer):
+#
+#     genero = serializers.CharField(max_length=10, required=False)
+#
+#
+#     def buscar(self):
+#         print("estoy en buscar")
+#         # print(self.validated_data.get('genero'))
+#
+#
+#         #resp = LibroSalidaSerializer(libros, many=True).data
+#         libros = Libro.objects.filter(genero=self.validated_data.get('genero'))
+#         resp = LibroSalidaSerializer(libros, many=True).data
+#
+#         return resp
+#
+#
+#     def validate_genero(self,param):
+#         cadena = 'x'
+#         if param.find(cadena)==-1:
+#             print("no contiene la letra x")
+#             return param
+#         else:
+#             raise serializers.ValidationError("El genero contiene la letra x")
+#
+#
+#
+# class LibroSalidaSerializer(LibroSerializer):
+#
+#     cuenta = serializers.SerializerMethodField()
+#
+#     def get_cuenta(self, data):
+#         libros = Libro.objects.filter(genero=data.genero)
+#         return libros.count()

@@ -2,10 +2,13 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .serializers import LibroSerializer, CrearLibroSerializer,\
-                        UpdateSerializer, DestroySerializer, \
-                        FilterSerializer, CountSerializer, \
-                        GeneroCountSerializer
+from .serializers import LibroSerializer, CrearLibroSerializer, \
+                            UpdateSerializer, DestroySerializer, \
+                            FilterSerializer, CountSerializer, \
+                            GeneroCountSerializer
+                            # BuscarSerializer, ContarSerializer,\
+                            # ContarSerializer,
+
 from .models import Libro
 
 
@@ -68,3 +71,50 @@ class LibroViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         resp = serializer.buscar_genero()
         return Response(resp)
+
+
+
+    # @action(detail=False, methods=['get'])
+    # def count(self, request):
+    #     serializer = ContarSerializer()
+    #     resp = serializer.contar()
+    #     resultado = dict()
+    #     resultado['count'] = resp
+    #     return Response({'count': resp})
+    #
+    # @action(detail=True, methods={'get'})
+    # def count_search(self, request, pk=None):
+    #     data1 = dict()
+    #     data1['genero'] = pk
+    #     print(data1)
+    #     serializer = BuscarSerializer(data=data1)
+    #     serializer.is_valid(raise_exception=True)
+    #     respuesta = serializer.buscar()
+    #     return Response(respuesta)
+
+    @action(detail=False,methods=['get'])
+    def count(self, request):
+        data1 = request.query_params.dict()
+        serializer = CountSerializer(data=data1)
+        serializer.is_valid(raise_exception=True)
+        resp = serializer.contar()
+        print("estoy en count")
+        return Response (resp)
+
+    @action(detail=True,methods=['get'])
+    def count(self, request, pk=None ):
+        print("estoy en count")
+        print(pk)
+        data1 = dict()
+        data1['genero'] = pk
+        print(data1)
+        serializer = ContarSerializer(data=data1)
+        serializer.is_valid(raise_exception=True)
+        resp = serializer.buscar()
+        return Response(resp)
+
+
+
+
+
+
