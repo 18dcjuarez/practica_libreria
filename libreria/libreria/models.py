@@ -9,3 +9,4 @@ class Libro(models.Model):
     editorial = models.TextField(null=False, max_length=15)
     disponible = models.BooleanField(default=False)
     creado = models.DateTimeField(auto_now_add=True)
+
