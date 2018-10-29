@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .serializers import LibroSerializer, CrearLibroSerializer, UpdateSerializer, DestroySerializer, FilterSerializer
+from .serializers import LibroSerializer, CrearLibroSerializer, UpdateSerializer, DestroySerializer, FilterSerializer, CountSerializer, ContarSerializer
+from rest_framework.decorators import action
+
 from .models import Libro
 
 
@@ -45,3 +47,30 @@ class LibroViewSet(viewsets.ModelViewSet):
         search.is_valid(raise_exception=True)
         resp = search.buscar()
         return Response(resp)
+
+    @action(detail=False,methods=['get'])
+    def count(self, request):
+        data1 = request.query_params.dict()
+        serializer = CountSerializer(data=data1)
+        serializer.is_valid(raise_exception=True)
+        resp = serializer.contar()
+        print("estoy en count")
+        return Response (resp)
+
+    @action(detail=True,methods=['get'])
+    def count(self, request, pk=None ):
+        print("estoy en count")
+        print(pk)
+        data1 = dict()
+        data1['genero'] = pk
+        print(data1)
+        serializer = ContarSerializer(data=data1)
+        serializer.is_valid(raise_exception=True)
+        resp = serializer.buscar()
+        return Response(resp)
+
+
+
+
+
+
