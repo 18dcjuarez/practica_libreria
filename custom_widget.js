@@ -27,6 +27,13 @@ var customWidgets = {
     title : {
         htmlCode: `<h1>{{label}}</h1>`,
         fieldType: "single",
+    },
+    paragraph : {
+        htmlCode: `
+            <h1>{{label}}</h1>
+            <p> This is a text</p>
+        `,
+        fieldType: "single",
     }
 
 }
