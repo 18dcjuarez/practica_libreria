@@ -5,7 +5,7 @@ var customWidgets = {
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="sendOtpButton">
         Oprime aquí para enviar código
       </button>
-      <h1>MENSAJE</h1>
+      <h1 style="color:red" >MENSAJE</h1>
         <div id="otpInputContainer" style="display: none; width: 50%; float: left; text-align: left;">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-touched">
             <input class="mdl-textfield__input vordynform__input" type="text" id="{{ field_name }}" name="{{ field_name }}">
