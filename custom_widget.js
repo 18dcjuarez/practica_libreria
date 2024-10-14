@@ -24,6 +24,14 @@ var customWidgets = {
 
     `,
     },
+    radio_buttons_test: {
+        htmlCode: `<div>
+                      <md-radio name="group"></md-radio>
+                      <md-radio name="group"></md-radio>
+                      <md-radio name="group"></md-radio>
+                    </div>`,
+        fieldType: "single",
+    },
     title : {
         htmlCode: `<h1>{{label}}</h1>`,
         fieldType: "single",
