@@ -28,7 +28,7 @@
             console.log('REMOTE LIBRARY CHECK');
             // const newWidgetDefinitions1 = Object.assign({}, widgetDefinitions);
             // const newWidgetDefinitions2 = Object.assign(newWidgetDefinitions1, customWidgets);
-            const newWidgetDefinitions2 = Object.assign(widgetDefinitions, customWidgets);
+            const newWidgetDefinitions2 = Object.assign(this.widgetDefinitions, customWidgets);
         
             console.log('????', customWidgets);
             //console.log(newWidgetDefinitions1);
