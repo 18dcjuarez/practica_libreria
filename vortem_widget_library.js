@@ -26,11 +26,12 @@
         
             console.log('En FUNCION1', isFileExist, customWidgets);
             console.log('REMOTE LIBRARY CHECK');
-            const newWidgetDefinitions1 = Object.assign({}, WidgetDefinitions);
-            const newWidgetDefinitions2 = Object.assign(newWidgetDefinitions1, customWidgets);
+            // const newWidgetDefinitions1 = Object.assign({}, widgetDefinitions);
+            // const newWidgetDefinitions2 = Object.assign(newWidgetDefinitions1, customWidgets);
+            const newWidgetDefinitions2 = Object.assign(widgetDefinitions, customWidgets);
         
             console.log('????', customWidgets);
-            console.log(newWidgetDefinitions1);
+            //console.log(newWidgetDefinitions1);
             console.log('¿¿¿¿¿¿', newWidgetDefinitions2);
             return newWidgetDefinitions2;
         }
