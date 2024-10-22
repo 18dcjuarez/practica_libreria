@@ -25,6 +25,7 @@
             }
         
             console.log('En FUNCION1', isFileExist, customWidgets);
+            console.log('REMOTE LIBRARY CHECK');
             const newWidgetDefinitions1 = Object.assign({}, WidgetDefinitions);
             const newWidgetDefinitions2 = Object.assign(newWidgetDefinitions1, customWidgets);
         
